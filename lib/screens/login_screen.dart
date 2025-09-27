@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signup_screen.dart';
+import 'dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = '/signin';
@@ -22,45 +23,42 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // Label dengan tanda bintang
   Widget requiredLabel(String text) => Row(
-        children: [
-          Text(text, style: const TextStyle(fontSize: 13)),
-          const Text(
-            '*',
-            style: TextStyle(color: Colors.red, fontSize: 13),
-          ),
-        ],
-      );
+    children: [
+      Text(text, style: const TextStyle(fontSize: 13)),
+      const Text('*', style: TextStyle(color: Colors.red, fontSize: 13)),
+    ],
+  );
 
   // Tombol utama
   Widget primaryButton(String label, VoidCallback onTap) => GestureDetector(
-        onTap: onTap,
-        child: Container(
-          width: double.infinity,
-          height: 50,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(28),
-            gradient: const LinearGradient(
-              colors: [Color(0xFF1E88FF), Color(0xFF207DFF)],
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xFF1E88FF).withOpacity(0.25),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+    onTap: onTap,
+    child: Container(
+      width: double.infinity,
+      height: 50,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF1E88FF), Color(0xFF207DFF)],
         ),
-      );
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF1E88FF).withOpacity(0.25),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -135,9 +133,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 20),
 
                       primaryButton('Login', () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Login success')),
-                        );
+                        if (_email.text.isEmpty || _password.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please fill all the fields'),
+                            ),
+                          );
+                          return;
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            DashboardScreen.route,
+                            (route) => false,
+                          );
+                        }
                       }),
                       const SizedBox(height: 12),
 
@@ -147,9 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             context,
                             SignupScreen.route,
                           ),
-                          child: const Text(
-                            "Don't have an account? Sign Up",
-                          ),
+                          child: const Text("Don't have an account? Sign Up"),
                         ),
                       ),
                     ],
