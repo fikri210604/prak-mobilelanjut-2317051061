@@ -5,6 +5,7 @@ import 'package:myapp/row_widget.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/dashboard_screen.dart';
+import 'screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,16 +20,11 @@ void showErrorDialog(BuildContext context, String message) {
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: Text(message),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(ctx).pop(),
-          child: const Text(
-            'OK',
-            style: TextStyle(color: Color(0xFF1E88FF)),
-          ),
+          child: const Text('OK', style: TextStyle(color: Color(0xFF1E88FF))),
         ),
       ],
     ),
@@ -41,9 +37,7 @@ void showErrorSnackBar(BuildContext context, String message) {
       content: Text(message),
       backgroundColor: Colors.red,
       behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
   );
 }
@@ -85,6 +79,7 @@ class MyApp extends StatelessWidget {
       initialRoute: LoginScreen.route,
       routes: {
         '/': (_) => const LoginScreen(),
+        SplashScreen.route: (_) => const SplashScreen(),
         LoginScreen.route: (_) => const LoginScreen(),
         SignupScreen.route: (_) => const SignupScreen(),
         DashboardScreen.route: (_) => const DashboardScreen(),
